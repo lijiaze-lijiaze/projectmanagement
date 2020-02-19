@@ -4,11 +4,11 @@ import './App.css';
 
 import YearPlan from "./yearPlan"
 import DayPlans from './DayPlans'
-import Phases from "./signalCommonParameters/phases"
+import Stages from "./signalCommonParameters/stages"
 import EarlyOutTime from "./signalCommonParameters/earlyOutTime"
 import DelayStarts from "./signalCommonParameters/delayStarts"
-
-
+import Phases from "./signalCommonParameters/phases"
+import Intergreens from "./signalCommonParameters/intergreens"
 
 
 import { Select, Tabs,Row, Col,Table,InputNumber, message } from 'antd';
@@ -47,7 +47,7 @@ class Trafficlightflashfather extends React.Component {
             <div>
             <Tabs defaultActiveKey="5">
               <TabPane tab="阶段" key="5">
-                <Phases/>
+                <Stages/>
               </TabPane>
               <TabPane tab="早断" key="6">
                 <EarlyOutTime/>
@@ -56,10 +56,10 @@ class Trafficlightflashfather extends React.Component {
                <DelayStarts/>
               </TabPane>
               <TabPane tab="相位" key="8">
-                4
+                <Phases/>
               </TabPane>
               <TabPane tab="绿间隔" key="9">
-                5
+                <Intergreens/>
               </TabPane>
               <TabPane tab="冲突" key="10">
                 6

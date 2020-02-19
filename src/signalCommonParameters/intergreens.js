@@ -8,13 +8,13 @@ import '../yearPlan.less'
 // import Axios from '@common/Axios'
 // import Constant from '@common/Constant'
 
-class DelayStarts extends React.Component {
+class Intergreens extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      DelayStartsData: []
+      IntergreensData: []
     }
 
     this.junctionItem = {}
@@ -27,7 +27,7 @@ class DelayStarts extends React.Component {
 
   render() {
     const {
-      DelayStartsData
+      IntergreensData
     } = this.state
 
     return (
@@ -37,57 +37,34 @@ class DelayStarts extends React.Component {
             <thead>
               <tr>
                 <th rowSpan="2">相位</th>
-                {new Array(32).fill(0).map((t, index) => (
-                  <th key={index}>{index + 1}
-                  </th>
-                ))}
+                {
+                  new Array(32).fill(0).map((t, index) => (
+                    <th key={index}>{index + 1}
+                    </th>
+                  ))
+                }
               </tr>
               <tr>
-                <th>北向南直行</th>
-                <th>东向西直行</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
+                {
+                  new Array(32).fill(0).map((t, index) => (
+                    <th key={index}>
+                      向东
+                    </th>
+                  ))
+                }
               </tr>
             </thead>
             <tbody>
               {
                 new Array(32).fill(0).map((t, di) => (
                   <tr key={di}>
-                    <td>{di + 1}</td>
+                    <td>{di + 1}向北</td>
                     {new Array(32).fill(0).map((t, index) => (
-                      DelayStartsData[di] ?
-                        <td key={index} onClick={() => this.toggleCheck(di, 'delaystarttime', index)}>
-                          {Boolean(DelayStartsData[di].delaystarttime[index]) && <Icon type="check" />}
+                      IntergreensData[di] ?
+                        <td key={index} onClick={() => this.toggleCheck(di, 'intergreen', index)}>
+                          {Boolean(IntergreensData[di].intergreen[index]) && <Icon type="check" />}
                         </td> :
-                        <td key={index} onClick={() => this.toggleCheck(di, 'delaystarttime', index)}>
+                        <td key={index} onClick={() => this.toggleCheck(di, 'intergreen', index)}>
                           {Boolean(false) && <Icon type="check" />}
                         </td>
                     ))}
@@ -103,41 +80,40 @@ class DelayStarts extends React.Component {
 
   setCurrentJunction = junctionItem => {
     this.junctionItem = junctionItem
-    this.setState({ DelayStartsData: [] })
+    this.setState({ IntergreensData: [] })
   }
 
   getCtlConfData = async () => {
     // const controller_id = this.junctionItem.controller_id
 
-    let DelayStartsData = []
+    let IntergreensData = []
     // try {
     //   const res = await Axios.get(
     //     Constant.api.getCtlConf
     //       .replace('$id', controller_id)
     //       .replace('$key', 'schedules')
     //   )
-    //   DelayStartsData = res.data.plans
+    //   IntergreensData = res.data.plans
     // } catch (err) {
-    //   DelayStartsData = []
+    //   IntergreensData = []
     //   message.error('获取数据失败, ' + err)
     // }
-    DelayStartsData = [
-      {
-        "no": 1,
-        "delaystarttime": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0]
-      },{
-        "no": 2,
-        "delaystarttime": [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0]
-      },{
-        "no": 3,
-        "delaystarttime": [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0]
-      }
-    ]
-    this.convertCheckedData(DelayStartsData)
+    IntergreensData = [{
+      "no": 0,
+      "intergreen": [0, 6, 0, 0, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 0, 0, 0, 0, 6, 0, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6]
+    }, {
+      "no": 1,
+      "intergreen": [0, 6, 6, 0, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 0, 5, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0, 0, 0, 0, 0, 0, 6]
+    }, {
+      "no": 2,
+      "intergreen": [6, 0, 0, 0, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 0, 6, 0, 0, 0, 0, 0, 6, 6, 0, 6, 0, 0, 0, 0, 0, 0, 6]
+    }]
+
+    this.convertCheckedData(IntergreensData)
   }
 
-  convertCheckedData = (DelayStartsData) => {
-    // DelayStartsData.forEach(stages => {
+  convertCheckedData = (IntergreensData) => {
+    // IntergreensData.forEach(stages => {
     //   const monthArr = Number(stages.month).toString(2).split('')
     //   while (monthArr.length < 12) {
     //     monthArr.unshift(0)
@@ -160,34 +136,34 @@ class DelayStarts extends React.Component {
     //   stages.week = weekArr
     // })
 
-    this.setState({ DelayStartsData })
+    this.setState({ IntergreensData })
   }
 
   // handleDelayStartsDataChange = (index, field, e) => {
-  //   const { DelayStartsData } = this.state
-  //   DelayStartsData[index][field] = e
-  //   this.setState({ DelayStartsData })
+  //   const { IntergreensData } = this.state
+  //   IntergreensData[index][field] = e
+  //   this.setState({ IntergreensData })
   // }
 
   // toggleCheckAll = (index, field) => {
-  //   const { DelayStartsData } = this.state
+  //   const { IntergreensData } = this.state
 
-  //   if (DelayStartsData[index][field].every(x => x === 1)) {
-  //     DelayStartsData[index][field].fill(0)
+  //   if (IntergreensData[index][field].every(x => x === 1)) {
+  //     IntergreensData[index][field].fill(0)
   //   } else {
-  //     DelayStartsData[index][field].fill(1)
+  //     IntergreensData[index][field].fill(1)
   //   }
 
-  //   this.setState({ DelayStartsData })
+  //   this.setState({ IntergreensData })
   // }
 
   toggleCheck = (di, field, index) => {
-    const { DelayStartsData } = this.state
+    const { IntergreensData } = this.state
 
-    if(!DelayStartsData[di]) return
-    DelayStartsData[di][field][index] = Number(!DelayStartsData[di][field][index])
+    if (!IntergreensData[di]) return
+    IntergreensData[di][field][index] = Number(!IntergreensData[di][field][index])
 
-    this.setState({ DelayStartsData })
+    this.setState({ IntergreensData })
   }
 
   submitData = async () => {
@@ -217,18 +193,18 @@ class DelayStarts extends React.Component {
   }
 
   beforeSubmit = () => {
-    let { DelayStartsData } = this.state
+    let { IntergreensData } = this.state
 
-    DelayStartsData = Lodash.cloneDeep(DelayStartsData)
+    IntergreensData = Lodash.cloneDeep(IntergreensData)
 
-    DelayStartsData.forEach(plan => {
+    IntergreensData.forEach(plan => {
       plan.month = parseInt(plan.month.join(''), 2)
       plan.day = parseInt(plan.day.join(''), 2)
       plan.week = parseInt(plan.week.join(''), 2)
     })
 
-    return DelayStartsData
+    return IntergreensData
   }
 }
 
-export default DelayStarts
+export default Intergreens

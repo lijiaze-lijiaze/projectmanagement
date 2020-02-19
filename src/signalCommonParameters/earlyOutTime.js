@@ -37,38 +37,10 @@ class EarlyOutTime extends React.Component {
             <thead>
               <tr>
                 <th rowSpan="2">相位</th>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
-                <th>5</th>
-                <th>6</th>
-                <th>7</th>
-                <th>8</th>
-                <th>9</th>
-                <th>10</th>
-                <th>11</th>
-                <th>12</th>
-                <th>13</th>
-                <th>14</th>
-                <th>15</th>
-                <th>16</th>
-                <th>17</th>
-                <th>18</th>
-                <th>19</th>
-                <th>20</th>
-                <th>21</th>
-                <th>22</th>
-                <th>23</th>
-                <th>24</th>
-                <th>25</th>
-                <th>26</th>
-                <th>27</th>
-                <th>28</th>
-                <th>29</th>
-                <th>30</th>
-                <th>31</th>
-                <th>32</th>
+                {new Array(32).fill(0).map((t, index) => (
+                  <th key={index}>{index + 1}
+                  </th>
+                ))}
               </tr>
               <tr>
                 <th>北向南直行</th>
@@ -112,10 +84,10 @@ class EarlyOutTime extends React.Component {
                     <td>{di + 1}</td>
                     {new Array(32).fill(0).map((t, index) => (
                       EarlyOutTimeData[di] ?
-                        <td key={di} onClick={() => this.toggleCheck(index, 'day', di)}>
+                        <td key={index} onClick={() => this.toggleCheck(di, 'earlycuttime', index)}>
                           {Boolean(EarlyOutTimeData[di].earlycuttime[index]) && <Icon type="check" />}
                         </td> :
-                        <td key={di} onClick={() => this.toggleCheck(index, 'day', di)}>
+                        <td key={index} onClick={() => this.toggleCheck(index, 'earlycuttime', di)}>
                           {Boolean(false) && <Icon type="check" />}
                         </td>
                     ))}
@@ -152,7 +124,7 @@ class EarlyOutTime extends React.Component {
     EarlyOutTimeData = [
       {
         "no": 1,
-        "earlycuttime": [0, 0,1 , 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "earlycuttime": [0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       }
     ]
     this.convertCheckedData(EarlyOutTimeData)
@@ -203,10 +175,12 @@ class EarlyOutTime extends React.Component {
   //   this.setState({ EarlyOutTimeData })
   // }
 
-  toggleCheck = (index, field, fi) => {
+  toggleCheck = (di, field, index) => {
     const { EarlyOutTimeData } = this.state
 
-    EarlyOutTimeData[index][field][fi] = Number(!EarlyOutTimeData[index][field][fi])
+    if(!EarlyOutTimeData[di]) return
+      
+    EarlyOutTimeData[di][field][index] = Number(!EarlyOutTimeData[di][field][index])
 
     this.setState({ EarlyOutTimeData })
   }
@@ -214,8 +188,8 @@ class EarlyOutTime extends React.Component {
   submitData = async () => {
     const data = this.beforeSubmit()
     console.log('Submit>>>>>', data)
-    const controller_id = this.junctionItem.controller_id
-    const user_id = this.userInfo.irn
+    // const controller_id = this.junctionItem.controller_id
+    // const user_id = this.userInfo.irn
     // try {
     //   await Axios.post(
     //     Constant.api.setCtlConf

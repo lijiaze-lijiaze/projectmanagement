@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   Icon,
+  Button
 } from 'antd'
 import Lodash from 'lodash'
 
@@ -8,13 +9,13 @@ import '../yearPlan.less'
 // import Axios from '@common/Axios'
 // import Constant from '@common/Constant'
 
-class DelayStarts extends React.Component {
+class Stages extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      DelayStartsData: []
+      StagesData: []
     }
 
     this.junctionItem = {}
@@ -27,7 +28,7 @@ class DelayStarts extends React.Component {
 
   render() {
     const {
-      DelayStartsData
+      StagesData
     } = this.state
 
     return (
@@ -38,7 +39,7 @@ class DelayStarts extends React.Component {
               <tr>
                 <th rowSpan="2">相位</th>
                 {new Array(32).fill(0).map((t, index) => (
-                  <th key={index}>{index + 1}
+                  <th key={index+t}>{index + 1}
                   </th>
                 ))}
               </tr>
@@ -83,11 +84,11 @@ class DelayStarts extends React.Component {
                   <tr key={di}>
                     <td>{di + 1}</td>
                     {new Array(32).fill(0).map((t, index) => (
-                      DelayStartsData[di] ?
-                        <td key={index} onClick={() => this.toggleCheck(di, 'delaystarttime', index)}>
-                          {Boolean(DelayStartsData[di].delaystarttime[index]) && <Icon type="check" />}
+                      StagesData[di] ?
+                        <td key={index} onClick={() => this.toggleCheck(di, 'phaseinstage', index)}>
+                          {Boolean(StagesData[di].phaseinstage[index]) && <Icon type="check" />}
                         </td> :
-                        <td key={index} onClick={() => this.toggleCheck(di, 'delaystarttime', index)}>
+                        <td key={index} onClick={() => this.toggleCheck(di, 'phaseinstage', index)}>
                           {Boolean(false) && <Icon type="check" />}
                         </td>
                     ))}
@@ -96,6 +97,7 @@ class DelayStarts extends React.Component {
               }
             </tbody>
           </table>
+          <Button style={{ "marginTop": 10, "alignItems": "center" }}>图形化修改</Button>
         </div>
       </div>
     )
@@ -103,41 +105,53 @@ class DelayStarts extends React.Component {
 
   setCurrentJunction = junctionItem => {
     this.junctionItem = junctionItem
-    this.setState({ DelayStartsData: [] })
+    this.setState({ StagesData: [] })
   }
 
   getCtlConfData = async () => {
     // const controller_id = this.junctionItem.controller_id
 
-    let DelayStartsData = []
+    let StagesData = []
     // try {
     //   const res = await Axios.get(
     //     Constant.api.getCtlConf
     //       .replace('$id', controller_id)
     //       .replace('$key', 'schedules')
     //   )
-    //   DelayStartsData = res.data.plans
+    //   StagesData = res.data.plans
     // } catch (err) {
-    //   DelayStartsData = []
+    //   StagesData = []
     //   message.error('获取数据失败, ' + err)
     // }
-    DelayStartsData = [
+    StagesData = [
       {
         "no": 1,
-        "delaystarttime": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0]
-      },{
+        "name": "",
+        "phaseinstage": [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0],
+        "softdemand": 0,
+        "setred": 0,
+        "setoff": 0
+      }, {
         "no": 2,
-        "delaystarttime": [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0]
-      },{
+        "name": "",
+        "phaseinstage": [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
+        "softdemand": 0,
+        "setred": 0,
+        "setoff": 0
+      }, {
         "no": 3,
-        "delaystarttime": [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+        "name": "",
+        "phaseinstage": [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
+        "softdemand": 0,
+        "setred": 0,
+        "setoff": 0
       }
     ]
-    this.convertCheckedData(DelayStartsData)
+    this.convertCheckedData(StagesData)
   }
 
-  convertCheckedData = (DelayStartsData) => {
-    // DelayStartsData.forEach(stages => {
+  convertCheckedData = (StagesData) => {
+    // StagesData.forEach(stages => {
     //   const monthArr = Number(stages.month).toString(2).split('')
     //   while (monthArr.length < 12) {
     //     monthArr.unshift(0)
@@ -160,34 +174,32 @@ class DelayStarts extends React.Component {
     //   stages.week = weekArr
     // })
 
-    this.setState({ DelayStartsData })
+    this.setState({ StagesData })
   }
 
-  // handleDelayStartsDataChange = (index, field, e) => {
-  //   const { DelayStartsData } = this.state
-  //   DelayStartsData[index][field] = e
-  //   this.setState({ DelayStartsData })
+  // handlephasesDataChange = (index, field, e) => {
+  //   const { StagesData } = this.state
+  //   StagesData[index][field] = e
+  //   this.setState({ StagesData })
   // }
 
   // toggleCheckAll = (index, field) => {
-  //   const { DelayStartsData } = this.state
+  //   const { StagesData } = this.state
 
-  //   if (DelayStartsData[index][field].every(x => x === 1)) {
-  //     DelayStartsData[index][field].fill(0)
+  //   if (StagesData[index][field].every(x => x === 1)) {
+  //     StagesData[index][field].fill(0)
   //   } else {
-  //     DelayStartsData[index][field].fill(1)
+  //     StagesData[index][field].fill(1)
   //   }
 
-  //   this.setState({ DelayStartsData })
+  //   this.setState({ StagesData })
   // }
 
   toggleCheck = (di, field, index) => {
-    const { DelayStartsData } = this.state
-
-    if(!DelayStartsData[di]) return
-    DelayStartsData[di][field][index] = Number(!DelayStartsData[di][field][index])
-
-    this.setState({ DelayStartsData })
+    const { StagesData } = this.state
+    if(!StagesData[di]) return 
+    StagesData[di][field][index] = Number( !StagesData[di][field][index])
+    this.setState({ StagesData })
   }
 
   submitData = async () => {
@@ -217,18 +229,18 @@ class DelayStarts extends React.Component {
   }
 
   beforeSubmit = () => {
-    let { DelayStartsData } = this.state
+    let { StagesData } = this.state
 
-    DelayStartsData = Lodash.cloneDeep(DelayStartsData)
+    StagesData = Lodash.cloneDeep(StagesData)
 
-    DelayStartsData.forEach(plan => {
+    StagesData.forEach(plan => {
       plan.month = parseInt(plan.month.join(''), 2)
       plan.day = parseInt(plan.day.join(''), 2)
       plan.week = parseInt(plan.week.join(''), 2)
     })
 
-    return DelayStartsData
+    return StagesData
   }
 }
 
-export default DelayStarts
+export default Stages

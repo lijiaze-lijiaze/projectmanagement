@@ -1,11 +1,11 @@
 import React from 'react'
 import {
-  Icon,
-  Button
+  InputNumber,
+  Input
 } from 'antd'
 import Lodash from 'lodash'
 
-import '../yearPlan.less'
+import './phases.less'
 // import Axios from '@common/Axios'
 // import Constant from '@common/Constant'
 
@@ -15,7 +15,7 @@ class Phases extends React.Component {
     super(props)
 
     this.state = {
-      phasesData: []
+      PhasesData: []
     }
 
     this.junctionItem = {}
@@ -28,7 +28,7 @@ class Phases extends React.Component {
 
   render() {
     const {
-      phasesData
+      PhasesData
     } = this.state
 
     return (
@@ -38,94 +38,272 @@ class Phases extends React.Component {
             <thead>
               <tr>
                 <th rowSpan="2">相位</th>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
-                <th>5</th>
-                <th>6</th>
-                <th>7</th>
-                <th>8</th>
-                <th>9</th>
-                <th>10</th>
-                <th>11</th>
-                <th>12</th>
-                <th>13</th>
-                <th>14</th>
-                <th>15</th>
-                <th>16</th>
-                <th>17</th>
-                <th>18</th>
-                <th>19</th>
-                <th>20</th>
-                <th>21</th>
-                <th>22</th>
-                <th>23</th>
-                <th>24</th>
-                <th>25</th>
-                <th>26</th>
-                <th>27</th>
-                <th>28</th>
-                <th>29</th>
-                <th>30</th>
-                <th>31</th>
-                <th>32</th>
+                <th rowSpan="2">相位名</th>
+                <th colSpan="6">失去路权</th>
+                <th colSpan="6">获取路权</th>
+                <th rowSpan="2">最小绿</th>
+                <th rowSpan="2">最大绿1</th>
+                <th rowSpan="2">最大绿2</th>
+                <th rowSpan="2">延长</th>
+                <th colSpan="6">开机状态</th>
+                <th colSpan="6">关机状态</th>
               </tr>
               <tr>
-                <th>北向南直行</th>
-                <th>东向西直行</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
+                <th>S1</th>
+                <th>T1</th>
+                <th>S2</th>
+                <th>T2</th>
+                <th>S3</th>
+                <th>T3</th>
+                <th>S1</th>
+                <th>T1</th>
+                <th>S2</th>
+                <th>T2</th>
+                <th>S3</th>
+                <th>T3</th>
+                <th>S1</th>
+                <th>T1</th>
+                <th>S2</th>
+                <th>T2</th>
+                <th>S3</th>
+                <th>T3</th>
+                <th>S1</th>
+                <th>T1</th>
+                <th>S2</th>
+                <th>T2</th>
+                <th>S3</th>
+                <th>T3</th>
               </tr>
             </thead>
             <tbody>
-              {
-                new Array(32).fill(0).map((t, di) => (
-                  <tr key={di}>
-                    <td>{di + 1}</td>
-                    {new Array(32).fill(0).map((t, index) => (
-                      phasesData[di] ?
-                        <td key={di} onClick={() => this.toggleCheck(index, 'day', di)}>
-                          {Boolean(phasesData[di].phaseinstage[index]) && <Icon type="check" />}
-                        </td> :
-                        <td key={di} onClick={() => this.toggleCheck(index, 'day', di)}>
-                          {Boolean(false) && <Icon type="check" />}
-                        </td>
-                    ))}
-                  </tr>
-                ))
+              {(PhasesData || []).map((t, index) => (
+                <tr key={t.no}>
+                  <td>{t.no}</td>
+                  <td>
+                    <Input
+                      size="small"
+                      defaultValue={t.name}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'name')}
+                    />
+                  </td>
+                  {/* notrowcolor1 对应汉字红绿灯，转换 */}
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.notrowcolor1}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'notrowcolor1')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.norrowtime1}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'norrowtime1')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.notrowcolor2}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'notrowcolor2')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.norrowtime2}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'norrowtime2')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.notrowcolor3}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'notrowcolor3')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.norrowtime3}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'norrowtime3')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.rowcolor1}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'rowcolor1')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.rowtime1}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'rowtime1')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.rowcolor2}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'rowcolor2')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.rowtime2}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'rowtime2')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.rowcolor3}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'rowcolor3')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.rowtime3}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'rowtime3')}
+                    /></td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.min}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'min')}
+                    /></td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.max1}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'max1')}
+                    /></td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.max2}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'max2')}
+                    /></td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.extention}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'extention')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.startrowcolor1}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'startrowcolor1')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.startrowtime1}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'startrowtime1')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.startrowcolor2}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'startrowcolor2')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.startrowtime2}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'startrowtime2')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.startrowcolor3}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'startrowcolor3')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.startrowtime3}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'startrowtime3')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.startnotrowcolor1}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'startnotrowcolor1')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.startnotrowtime1}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'startnotrowtime1')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.startnotrowcolor2}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'startnotrowcolor2')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.startnotrowtime2}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'startnotrowtime2')}
+                    /></td>
+                  <td>
+                    <Input
+                      size="small"
+                      value={t.startnotrowcolor3}
+                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'startnotrowcolor3')}
+                    />
+                  </td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={512}
+                      value={t.startnotrowtime3}
+                      onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'startnotrowtime3')}
+                    /></td>
+                </tr>
+              ))
               }
             </tbody>
           </table>
-          <Button style={{"marginTop":10,"alignItems":"center"}}>图形化修改</Button>
         </div>
       </div>
     )
@@ -133,53 +311,100 @@ class Phases extends React.Component {
 
   setCurrentJunction = junctionItem => {
     this.junctionItem = junctionItem
-    this.setState({ phasesData: [] })
+    this.setState({ PhasesData: [] })
   }
 
   getCtlConfData = async () => {
     // const controller_id = this.junctionItem.controller_id
 
-    let phasesData = []
+    let PhasesData = []
     // try {
     //   const res = await Axios.get(
     //     Constant.api.getCtlConf
     //       .replace('$id', controller_id)
     //       .replace('$key', 'schedules')
     //   )
-    //   phasesData = res.data.plans
+    //   PhasesData = res.data.plans
     // } catch (err) {
-    //   phasesData = []
+    //   PhasesData = []
     //   message.error('获取数据失败, ' + err)
     // }
-    phasesData = [
-      {
-        "no": 1,
-        "name": "",
-        "phaseinstage": [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0],
-        "softdemand": 0,
-        "setred": 0,
-        "setoff": 0
-      }, {
-        "no": 2,
-        "name": "",
-        "phaseinstage": [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
-        "softdemand": 0,
-        "setred": 0,
-        "setoff": 0
-      }, {
-        "no": 3,
-        "name": "",
-        "phaseinstage": [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
-        "softdemand": 0,
-        "setred": 0,
-        "setoff": 0
-      }
-    ]
-    this.convertCheckedData(phasesData)
+    PhasesData = [{
+      "no": 1,
+      "name": "",
+      "notrowcolor1": 33,
+      "norrowtime1": 0,
+      "notrowcolor2": 48,
+      "norrowtime2": 4,
+      "notrowcolor3": 16,
+      "norrowtime3": 0,
+      "rowcolor1": 16,
+      "rowtime1": 6,
+      "rowcolor2": 0,
+      "rowtime2": 0,
+      "rowcolor3": 0,
+      "rowtime3": 0,
+      "startrowcolor1": 16,
+      "startrowtime1": 5,
+      "startrowcolor2": 0,
+      "startrowtime2": 0,
+      "startrowcolor3": 0,
+      "startrowtime3": 0,
+      "startnotrowcolor1": 0,
+      "startnotrowtime1": 0,
+      "startnotrowcolor2": 0,
+      "startnotrowtime2": 0,
+      "startnotrowcolor3": 0,
+      "startnotrowtime3": 0,
+      "min": 0,
+      "max1": 0,
+      "max2": 0,
+      "extention": 4,
+      "setred": 0,
+      "setoff": 0,
+      "cdtype": 0,
+      "cdaddress": 0
+    },{
+      "no": 1,
+      "name": "",
+      "notrowcolor1": 33,
+      "norrowtime1": 0,
+      "notrowcolor2": 48,
+      "norrowtime2": 4,
+      "notrowcolor3": 16,
+      "norrowtime3": 0,
+      "rowcolor1": 16,
+      "rowtime1": 6,
+      "rowcolor2": 0,
+      "rowtime2": 0,
+      "rowcolor3": 0,
+      "rowtime3": 0,
+      "startrowcolor1": 16,
+      "startrowtime1": 5,
+      "startrowcolor2": 0,
+      "startrowtime2": 0,
+      "startrowcolor3": 0,
+      "startrowtime3": 0,
+      "startnotrowcolor1": 0,
+      "startnotrowtime1": 0,
+      "startnotrowcolor2": 0,
+      "startnotrowtime2": 0,
+      "startnotrowcolor3": 0,
+      "startnotrowtime3": 0,
+      "min": 0,
+      "max1": 0,
+      "max2": 0,
+      "extention": 4,
+      "setred": 0,
+      "setoff": 0,
+      "cdtype": 0,
+      "cdaddress": 0
+    }]
+    this.convertCheckedData(PhasesData)
   }
 
-  convertCheckedData = (phasesData) => {
-    // phasesData.forEach(stages => {
+  convertCheckedData = (PhasesData) => {
+    // PhasesData.forEach(stages => {
     //   const monthArr = Number(stages.month).toString(2).split('')
     //   while (monthArr.length < 12) {
     //     monthArr.unshift(0)
@@ -202,40 +427,44 @@ class Phases extends React.Component {
     //   stages.week = weekArr
     // })
 
-    this.setState({ phasesData })
+    this.setState({ PhasesData })
   }
-
-  // handlephasesDataChange = (index, field, e) => {
-  //   const { phasesData } = this.state
-  //   phasesData[index][field] = e
-  //   this.setState({ phasesData })
-  // }
+  handlePhasesDataChangeInput = (index, field, e) => {
+    console.log(e.target.value);
+    const { PhasesData } = this.state
+    PhasesData[index][field] = e.target.value
+    this.setState({ PhasesData })
+  }
+  handlePhasesDataChangeInputNumber = (index, field, e) => {
+    const { PhasesData } = this.state
+    PhasesData[index][field] = e
+    this.setState({ PhasesData })
+  }
 
   // toggleCheckAll = (index, field) => {
-  //   const { phasesData } = this.state
+  //   const { PhasesData } = this.state
 
-  //   if (phasesData[index][field].every(x => x === 1)) {
-  //     phasesData[index][field].fill(0)
+  //   if (PhasesData[index][field].every(x => x === 1)) {
+  //     PhasesData[index][field].fill(0)
   //   } else {
-  //     phasesData[index][field].fill(1)
+  //     PhasesData[index][field].fill(1)
   //   }
 
-  //   this.setState({ phasesData })
+  //   this.setState({ PhasesData })
   // }
 
-  toggleCheck = (index, field, fi) => {
-    const { phasesData } = this.state
-
-    phasesData[index][field][fi] = Number(!phasesData[index][field][fi])
-
-    this.setState({ phasesData })
-  }
+  // toggleCheck = (di, field, index) => {
+  //   const { PhasesData } = this.state
+  //   if (!PhasesData[di]) return
+  //   PhasesData[di][field][index] = Number(!PhasesData[di][field][index])
+  //   this.setState({ PhasesData })
+  // }
 
   submitData = async () => {
     const data = this.beforeSubmit()
     console.log('Submit>>>>>', data)
-    const controller_id = this.junctionItem.controller_id
-    const user_id = this.userInfo.irn
+    // const controller_id = this.junctionItem.controller_id
+    // const user_id = this.userInfo.irn
     // try {
     //   await Axios.post(
     //     Constant.api.setCtlConf
@@ -258,17 +487,17 @@ class Phases extends React.Component {
   }
 
   beforeSubmit = () => {
-    let { phasesData } = this.state
+    let { PhasesData } = this.state
 
-    phasesData = Lodash.cloneDeep(phasesData)
+    PhasesData = Lodash.cloneDeep(PhasesData)
 
-    phasesData.forEach(plan => {
+    PhasesData.forEach(plan => {
       plan.month = parseInt(plan.month.join(''), 2)
       plan.day = parseInt(plan.day.join(''), 2)
       plan.week = parseInt(plan.week.join(''), 2)
     })
 
-    return phasesData
+    return PhasesData
   }
 }
 
