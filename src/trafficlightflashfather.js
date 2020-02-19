@@ -1,14 +1,17 @@
 import React from 'react';
 
 import './App.css';
-<<<<<<< HEAD
 
-import { Select, Tabs } from 'antd';
-import YearPlan from "./yearPlan.js"
-=======
+import YearPlan from "./yearPlan"
 import DayPlans from './DayPlans'
+import Phases from "./signalCommonParameters/phases"
+import EarlyOutTime from "./signalCommonParameters/earlyOutTime"
+import DelayStarts from "./signalCommonParameters/delayStarts"
+
+
+
+
 import { Select, Tabs,Row, Col,Table,InputNumber, message } from 'antd';
->>>>>>> 5088130b4b4e5fe1f0ee2cecb5b3a7b809a27abe
 const { TabPane } = Tabs;
 const { Column } = Table
 const { Option } = Select
@@ -44,13 +47,13 @@ class Trafficlightflashfather extends React.Component {
             <div>
             <Tabs defaultActiveKey="5">
               <TabPane tab="阶段" key="5">
-                1
+                <Phases/>
               </TabPane>
               <TabPane tab="早断" key="6">
-                2
+                <EarlyOutTime/>
               </TabPane>
               <TabPane tab="晚放" key="7">
-               3
+               <DelayStarts/>
               </TabPane>
               <TabPane tab="相位" key="8">
                 4

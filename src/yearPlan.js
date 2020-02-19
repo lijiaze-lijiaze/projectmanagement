@@ -38,6 +38,7 @@ class YearPlan extends React.Component {
           <table className="year-plan-info-table">
             <thead>
               <tr>
+                <th rowSpan="2">操作</th>
                 <th rowSpan="2">编号</th>
                 <th rowSpan="2">路口号</th>
                 <th rowSpan="2">优先级</th>
@@ -70,13 +71,21 @@ class YearPlan extends React.Component {
             <tbody>
               {(yearPlanData || []).map((plan, index) => (
                 <tr key={plan.no}>
+                  <td><input type="checkbox" style={{ "width": 20, "height": 20 }} /> 读写</td>
                   <td>{plan.no}</td>
-                  <td>{plan.intersection}</td>
                   <td>
                     <InputNumber
                       size="small"
                       min={0}
-                      max={255}
+                      max={4}
+                      value={plan.intersection}
+                      onChange={e => this.handleYearPlanDataChange(index, 'priority', e)}
+                    /></td>
+                  <td>
+                    <InputNumber
+                      size="small"
+                      min={0}
+                      max={10}
                       value={plan.priority}
                       onChange={e => this.handleYearPlanDataChange(index, 'priority', e)}
                     />
@@ -129,7 +138,6 @@ class YearPlan extends React.Component {
   }
 
   getCtlConfData = async () => {
-    console.log(666);
     // const controller_id = this.junctionItem.controller_id
 
     let yearPlanData = []
