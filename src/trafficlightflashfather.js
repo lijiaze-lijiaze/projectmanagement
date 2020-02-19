@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './App.css';
-
+import ProjectPlans from "./project"
 import YearPlan from "./yearPlan"
 import DayPlans from './DayPlans'
 import Phases from "./signalCommonParameters/phases"
@@ -35,7 +35,7 @@ class Trafficlightflashfather extends React.Component {
       <div>
         <Tabs defaultActiveKey="1">
           <TabPane tab="方案" key="1">
-            Content of Tab Pane 1
+            <ProjectPlans></ProjectPlans>
           </TabPane>
           <TabPane tab="日计划" key="2">
             <DayPlans></DayPlans>
