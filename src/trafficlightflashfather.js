@@ -1,9 +1,11 @@
 import React from 'react';
 
 import './App.css';
-
-import { Select, Tabs } from 'antd';
+import DayPlans from './DayPlans'
+import { Select, Tabs,Row, Col,Table,InputNumber, message } from 'antd';
 const { TabPane } = Tabs;
+const { Column } = Table
+const { Option } = Select
 class Trafficlightflashfather extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +18,10 @@ class Trafficlightflashfather extends React.Component {
 
   }
   render() {
-    const { } = this.state
+    const {
+      dayPlanData,
+      currentDayPlan
+    } = this.state
     return (
       <div>
         <Tabs defaultActiveKey="1">
@@ -24,7 +29,7 @@ class Trafficlightflashfather extends React.Component {
             Content of Tab Pane 1
           </TabPane>
           <TabPane tab="日计划" key="2">
-            Content of Tab Pane 2
+            <DayPlans></DayPlans>
           </TabPane>
           <TabPane tab="年计划" key="3">
             Content of Tab Pane 3
@@ -84,7 +89,11 @@ class Trafficlightflashfather extends React.Component {
       </div>
     )
   }
-
+  setCurrentDayPlan = item => {
+    this.setState({
+      currentDayPlan: item
+    })
+  }
 }
 
 export default Trafficlightflashfather;
