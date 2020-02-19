@@ -2,7 +2,7 @@ import React from 'react';
 
 import './App.css';
 
-import { Select, Tabs,Row, Col,Table,InputNumber, message } from 'antd';
+import { Select, Tabs,Row, Col,Table,InputNumber, message ,Checkbox} from 'antd';
 const { TabPane } = Tabs;
 const { Column } = Table
 const { Option } = Select
@@ -81,6 +81,9 @@ class DayPlans extends React.Component {
                 title="操作"
                 
                 width="85px"
+                render={(text, record, index) => (
+                  <Checkbox>读写</Checkbox>
+                )}
               />
               <Column
                 title="日计划号"
