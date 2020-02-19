@@ -11,7 +11,7 @@ import DelayStarts from "./signalCommonParameters/delayStarts"
 
 
 
-import { Select, Tabs,Row, Col,Table,InputNumber, message,Checkbox } from 'antd';
+import { Select, Tabs,Row, Col,Table,InputNumber, message,Checkbox,Button } from 'antd';
 const { TabPane } = Tabs;
 const { Column } = Table
 const { Option } = Select
@@ -33,7 +33,14 @@ class Trafficlightflashfather extends React.Component {
     } = this.state
     return (
       <div>
-        <Tabs defaultActiveKey="1">
+        <Row style={{width:'600px'}}>
+        <Col span={6}><Button type="primary" size='small'>读当前表</Button></Col>
+        <Col span={6}><Button type="primary" size='small'>写当前表</Button></Col>
+        <Col span={6}><Button type="primary" size='small'>读表中选中方案</Button></Col>
+        <Col span={6}><Button type="primary" size='small'>写表中选中方案</Button></Col>
+        </Row>
+        <Row>
+           <Tabs defaultActiveKey="1">
           <TabPane tab="方案" key="1">
             <ProjectPlans></ProjectPlans>
           </TabPane>
@@ -95,6 +102,8 @@ class Trafficlightflashfather extends React.Component {
           </TabPane>
         </Tabs>
 
+        </Row>
+     
       </div>
     )
   }
