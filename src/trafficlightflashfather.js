@@ -1,14 +1,9 @@
 import React from 'react';
 
 import './App.css';
-<<<<<<< HEAD
-
-import { Select, Tabs } from 'antd';
 import YearPlan from "./yearPlan.js"
-=======
 import DayPlans from './DayPlans'
 import { Select, Tabs,Row, Col,Table,InputNumber, message } from 'antd';
->>>>>>> 5088130b4b4e5fe1f0ee2cecb5b3a7b809a27abe
 const { TabPane } = Tabs;
 const { Column } = Table
 const { Option } = Select
