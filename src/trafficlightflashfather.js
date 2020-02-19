@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 
 import { Select, Tabs } from 'antd';
+import YearPlan from "./yearPlan.js"
 const { TabPane } = Tabs;
 class Trafficlightflashfather extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class Trafficlightflashfather extends React.Component {
             Content of Tab Pane 2
           </TabPane>
           <TabPane tab="年计划" key="3">
-            Content of Tab Pane 3
+            <YearPlan/>
           </TabPane>
           <TabPane tab="信号机公共参数" key="4">
             <div>
