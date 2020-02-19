@@ -2,7 +2,7 @@ import React from 'react';
 
 import './App.css';
 
-import { Select, Tabs,Row, Col,Table,InputNumber, message ,Button} from 'antd';
+import { Select, Tabs,Row, Col,Table,InputNumber, message ,Button,Checkbox} from 'antd';
 const { TabPane } = Tabs;
 const { Column } = Table
 const { Option } = Select
@@ -73,6 +73,19 @@ class ProjectPlans extends React.Component {
                 record.no === currentPlan.no ? 'active' : ''
               )}
             >
+              <Column
+                title="操作"
+                
+                width="150px"
+                render={(text, record, index) => (
+                  <div>
+                     <Col span={12}><Checkbox>读写</Checkbox></Col>
+                     <Col span={12}><Button type="primary" size='small'>编辑</Button></Col>
+                     
+                  </div>
+                 
+                )}
+              />
               <Column
                 title="方案号"
                 dataIndex="no"

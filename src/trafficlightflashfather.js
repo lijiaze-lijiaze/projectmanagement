@@ -11,7 +11,7 @@ import DelayStarts from "./signalCommonParameters/delayStarts"
 
 
 
-import { Select, Tabs,Row, Col,Table,InputNumber, message } from 'antd';
+import { Select, Tabs,Row, Col,Table,InputNumber, message,Checkbox } from 'antd';
 const { TabPane } = Tabs;
 const { Column } = Table
 const { Option } = Select
