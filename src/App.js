@@ -6,8 +6,6 @@ import Trafficlightflashfather from './trafficlightflashfather'
 function App() {
   return (
     <div>
-      
-       
         <Trafficlightflashfather ></Trafficlightflashfather>
     
     </div>

@@ -1,4 +1,4 @@
-// 阶段
+// 相位灯组
 import React from 'react'
 import {
   Icon,
@@ -10,15 +10,15 @@ import '../yearPlan.less'
 // import Axios from '@common/Axios'
 // import Constant from '@common/Constant'
 
-class Stages extends React.Component {
+class PhaseChyTech extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      StagesData: []
+      PhaseChyTechData: []
     }
-
+    this.count = 0
     this.junctionItem = {}
     this.userInfo = JSON.parse(sessionStorage.getItem('t1_user'))
   }
@@ -29,7 +29,7 @@ class Stages extends React.Component {
 
   render() {
     const {
-      StagesData
+      PhaseChyTechData
     } = this.state
 
     return (
@@ -38,45 +38,11 @@ class Stages extends React.Component {
           <table className="year-plan-info-table">
             <thead>
               <tr>
-                <th rowSpan="2">相位</th>
+                <th rowSpan="2">灯组<br />相位</th>
                 {new Array(32).fill(0).map((t, index) => (
-                  <th key={index+t}>{index + 1}
+                  <th key={index}>{index + 1}
                   </th>
                 ))}
-              </tr>
-              <tr>
-                <th>北向南直行</th>
-                <th>东向西直行</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
               </tr>
             </thead>
             <tbody>
@@ -84,12 +50,15 @@ class Stages extends React.Component {
                 new Array(32).fill(0).map((t, di) => (
                   <tr key={di}>
                     <td>{di + 1}</td>
+                        
                     {new Array(32).fill(0).map((t, index) => (
-                      StagesData[di] ?
-                        <td key={index} onClick={() => this.toggleCheck(di, 'phaseinstage', index)}>
-                          {Boolean(StagesData[di].phaseinstage[index]) && <Icon type="check" />}
+                      // 存在可能会跳过灯组的情况
+                      // PhaseChyTechData[di]&& PhaseChyTechData[di].no === di?
+                      PhaseChyTechData[di]?
+                        <td key={index} onClick={() => this.toggleCheck(di, 'phase', index)}>
+                          {Boolean(PhaseChyTechData[di].phase[index]) && <Icon type="check" />}
                         </td> :
-                        <td key={index} onClick={() => this.toggleCheck(di, 'phaseinstage', index)}>
+                        <td key={index} onClick={() => this.toggleCheck(index, 'phase', di)}>
                           {Boolean(false) && <Icon type="check" />}
                         </td>
                     ))}
@@ -98,7 +67,6 @@ class Stages extends React.Component {
               }
             </tbody>
           </table>
-          <Button style={{ "marginTop": 10 }}>图形化修改</Button>
         </div>
       </div>
     )
@@ -106,53 +74,40 @@ class Stages extends React.Component {
 
   setCurrentJunction = junctionItem => {
     this.junctionItem = junctionItem
-    this.setState({ StagesData: [] })
+    this.setState({ PhaseChyTechData: [] })
   }
 
   getCtlConfData = async () => {
     // const controller_id = this.junctionItem.controller_id
 
-    let StagesData = []
+    let PhaseChyTechData = []
     // try {
     //   const res = await Axios.get(
     //     Constant.api.getCtlConf
     //       .replace('$id', controller_id)
     //       .replace('$key', 'schedules')
     //   )
-    //   StagesData = res.data.plans
+    //   PhaseChyTechData = res.data.plans
     // } catch (err) {
-    //   StagesData = []
+    //   PhaseChyTechData = []
     //   message.error('获取数据失败, ' + err)
     // }
-    StagesData = [
-      {
-        "no": 1,
-        "name": "",
-        "phaseinstage": [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0],
-        "softdemand": 0,
-        "setred": 0,
-        "setoff": 0
-      }, {
-        "no": 2,
-        "name": "",
-        "phaseinstage": [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
-        "softdemand": 0,
-        "setred": 0,
-        "setoff": 0
-      }, {
-        "no": 3,
-        "name": "",
-        "phaseinstage": [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
-        "softdemand": 0,
-        "setred": 0,
-        "setoff": 0
-      }
-    ]
-    this.convertCheckedData(StagesData)
+    PhaseChyTechData = [{
+      "no": 0,
+      "phase": [1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0]
+
+    },{
+      "no": 1,
+      "phase":[0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0]
+    },{
+      "no": 2,
+      "phase": [0, 1, 1, 0,0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0]
+    }]
+    this.convertCheckedData(PhaseChyTechData)
   }
 
-  convertCheckedData = (StagesData) => {
-    // StagesData.forEach(stages => {
+  convertCheckedData = (PhaseChyTechData) => {
+    // PhaseChyTechData.forEach(stages => {
     //   const monthArr = Number(stages.month).toString(2).split('')
     //   while (monthArr.length < 12) {
     //     monthArr.unshift(0)
@@ -175,32 +130,35 @@ class Stages extends React.Component {
     //   stages.week = weekArr
     // })
 
-    this.setState({ StagesData })
+    this.setState({ PhaseChyTechData })
   }
 
-  // handlephasesDataChange = (index, field, e) => {
-  //   const { StagesData } = this.state
-  //   StagesData[index][field] = e
-  //   this.setState({ StagesData })
+  // handleEarlyOutTimeDataChange = (index, field, e) => {
+  //   const { PhaseChyTechData } = this.state
+  //   PhaseChyTechData[index][field] = e
+  //   this.setState({ PhaseChyTechData })
   // }
 
   // toggleCheckAll = (index, field) => {
-  //   const { StagesData } = this.state
+  //   const { PhaseChyTechData } = this.state
 
-  //   if (StagesData[index][field].every(x => x === 1)) {
-  //     StagesData[index][field].fill(0)
+  //   if (PhaseChyTechData[index][field].every(x => x === 1)) {
+  //     PhaseChyTechData[index][field].fill(0)
   //   } else {
-  //     StagesData[index][field].fill(1)
+  //     PhaseChyTechData[index][field].fill(1)
   //   }
 
-  //   this.setState({ StagesData })
+  //   this.setState({ PhaseChyTechData })
   // }
 
   toggleCheck = (di, field, index) => {
-    const { StagesData } = this.state
-    if(!StagesData[di]) return 
-    StagesData[di][field][index] = Number( !StagesData[di][field][index])
-    this.setState({ StagesData })
+    const { PhaseChyTechData } = this.state
+
+    if (!PhaseChyTechData[di]) return
+
+    PhaseChyTechData[di][field][index] = Number(!PhaseChyTechData[di][field][index])
+
+    this.setState({ PhaseChyTechData })
   }
 
   submitData = async () => {
@@ -230,18 +188,18 @@ class Stages extends React.Component {
   }
 
   beforeSubmit = () => {
-    let { StagesData } = this.state
+    let { PhaseChyTechData } = this.state
 
-    StagesData = Lodash.cloneDeep(StagesData)
+    PhaseChyTechData = Lodash.cloneDeep(PhaseChyTechData)
 
-    StagesData.forEach(plan => {
+    PhaseChyTechData.forEach(plan => {
       plan.month = parseInt(plan.month.join(''), 2)
       plan.day = parseInt(plan.day.join(''), 2)
       plan.week = parseInt(plan.week.join(''), 2)
     })
 
-    return StagesData
+    return PhaseChyTechData
   }
 }
 
-export default Stages
+export default PhaseChyTech

@@ -1,4 +1,4 @@
-// 阶段
+// 需求
 import React from 'react'
 import {
   Icon,
@@ -10,13 +10,13 @@ import '../yearPlan.less'
 // import Axios from '@common/Axios'
 // import Constant from '@common/Constant'
 
-class Stages extends React.Component {
+class Demand extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      StagesData: []
+      DemandData: []
     }
 
     this.junctionItem = {}
@@ -29,7 +29,7 @@ class Stages extends React.Component {
 
   render() {
     const {
-      StagesData
+      DemandData
     } = this.state
 
     return (
@@ -38,45 +38,11 @@ class Stages extends React.Component {
           <table className="year-plan-info-table">
             <thead>
               <tr>
-                <th rowSpan="2">相位</th>
+                <th rowSpan="2">检测<br />相位</th>
                 {new Array(32).fill(0).map((t, index) => (
-                  <th key={index+t}>{index + 1}
+                  <th key={index}>{index + 1}
                   </th>
                 ))}
-              </tr>
-              <tr>
-                <th>北向南直行</th>
-                <th>东向西直行</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
-                <th>向南</th>
-                <th>向北</th>
-                <th>向东</th>
-                <th>向西</th>
               </tr>
             </thead>
             <tbody>
@@ -84,12 +50,13 @@ class Stages extends React.Component {
                 new Array(32).fill(0).map((t, di) => (
                   <tr key={di}>
                     <td>{di + 1}</td>
+                    {/* 这个数据可能是（x,y）形式，待调整 */}
                     {new Array(32).fill(0).map((t, index) => (
-                      StagesData[di] ?
-                        <td key={index} onClick={() => this.toggleCheck(di, 'phaseinstage', index)}>
-                          {Boolean(StagesData[di].phaseinstage[index]) && <Icon type="check" />}
+                      DemandData[di] ?
+                        <td key={index} onClick={() => this.toggleCheck(di, 'demands', index)}>
+                          {Boolean(DemandData[di].demands[index]) && <Icon type="check" />}
                         </td> :
-                        <td key={index} onClick={() => this.toggleCheck(di, 'phaseinstage', index)}>
+                        <td key={index} onClick={() => this.toggleCheck(index, 'demands', di)}>
                           {Boolean(false) && <Icon type="check" />}
                         </td>
                     ))}
@@ -98,7 +65,6 @@ class Stages extends React.Component {
               }
             </tbody>
           </table>
-          <Button style={{ "marginTop": 10 }}>图形化修改</Button>
         </div>
       </div>
     )
@@ -106,53 +72,38 @@ class Stages extends React.Component {
 
   setCurrentJunction = junctionItem => {
     this.junctionItem = junctionItem
-    this.setState({ StagesData: [] })
+    this.setState({ DemandData: [] })
   }
 
   getCtlConfData = async () => {
     // const controller_id = this.junctionItem.controller_id
 
-    let StagesData = []
+    let DemandData = []
     // try {
     //   const res = await Axios.get(
     //     Constant.api.getCtlConf
     //       .replace('$id', controller_id)
     //       .replace('$key', 'schedules')
     //   )
-    //   StagesData = res.data.plans
+    //   DemandData = res.data.plans
     // } catch (err) {
-    //   StagesData = []
+    //   DemandData = []
     //   message.error('获取数据失败, ' + err)
     // }
-    StagesData = [
+    DemandData = [
       {
-        "no": 1,
-        "name": "",
-        "phaseinstage": [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0],
-        "softdemand": 0,
-        "setred": 0,
-        "setoff": 0
-      }, {
-        "no": 2,
-        "name": "",
-        "phaseinstage": [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
-        "softdemand": 0,
-        "setred": 0,
-        "setoff": 0
-      }, {
-        "no": 3,
-        "name": "",
-        "phaseinstage": [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
-        "softdemand": 0,
-        "setred": 0,
-        "setoff": 0
+        "no": 0,
+        "demands": [0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]
+      },{
+        "no": 0,
+        "demands": [0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1]
       }
     ]
-    this.convertCheckedData(StagesData)
+    this.convertCheckedData(DemandData)
   }
 
-  convertCheckedData = (StagesData) => {
-    // StagesData.forEach(stages => {
+  convertCheckedData = (DemandData) => {
+    // DemandData.forEach(stages => {
     //   const monthArr = Number(stages.month).toString(2).split('')
     //   while (monthArr.length < 12) {
     //     monthArr.unshift(0)
@@ -175,32 +126,35 @@ class Stages extends React.Component {
     //   stages.week = weekArr
     // })
 
-    this.setState({ StagesData })
+    this.setState({ DemandData })
   }
 
-  // handlephasesDataChange = (index, field, e) => {
-  //   const { StagesData } = this.state
-  //   StagesData[index][field] = e
-  //   this.setState({ StagesData })
+  // handleEarlyOutTimeDataChange = (index, field, e) => {
+  //   const { DemandData } = this.state
+  //   DemandData[index][field] = e
+  //   this.setState({ DemandData })
   // }
 
   // toggleCheckAll = (index, field) => {
-  //   const { StagesData } = this.state
+  //   const { DemandData } = this.state
 
-  //   if (StagesData[index][field].every(x => x === 1)) {
-  //     StagesData[index][field].fill(0)
+  //   if (DemandData[index][field].every(x => x === 1)) {
+  //     DemandData[index][field].fill(0)
   //   } else {
-  //     StagesData[index][field].fill(1)
+  //     DemandData[index][field].fill(1)
   //   }
 
-  //   this.setState({ StagesData })
+  //   this.setState({ DemandData })
   // }
 
   toggleCheck = (di, field, index) => {
-    const { StagesData } = this.state
-    if(!StagesData[di]) return 
-    StagesData[di][field][index] = Number( !StagesData[di][field][index])
-    this.setState({ StagesData })
+    const { DemandData } = this.state
+
+    if (!DemandData[di]) return
+
+    DemandData[di][field][index] = Number(!DemandData[di][field][index])
+
+    this.setState({ DemandData })
   }
 
   submitData = async () => {
@@ -230,18 +184,18 @@ class Stages extends React.Component {
   }
 
   beforeSubmit = () => {
-    let { StagesData } = this.state
+    let { DemandData } = this.state
 
-    StagesData = Lodash.cloneDeep(StagesData)
+    DemandData = Lodash.cloneDeep(DemandData)
 
-    StagesData.forEach(plan => {
+    DemandData.forEach(plan => {
       plan.month = parseInt(plan.month.join(''), 2)
       plan.day = parseInt(plan.day.join(''), 2)
       plan.week = parseInt(plan.week.join(''), 2)
     })
 
-    return StagesData
+    return DemandData
   }
 }
 
-export default Stages
+export default Demand

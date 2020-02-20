@@ -1,3 +1,4 @@
+// 相位
 import React from 'react'
 import {
   InputNumber,
@@ -8,6 +9,7 @@ import Lodash from 'lodash'
 import './phases.less'
 // import Axios from '@common/Axios'
 // import Constant from '@common/Constant'
+
 
 class Phases extends React.Component {
 
@@ -76,18 +78,58 @@ class Phases extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {(PhasesData || []).map((t, index) => (
-                <tr key={t.no}>
-                  <td>{t.no}</td>
-                  <td>
-                    <Input
-                      size="small"
-                      defaultValue={t.name}
-                      onChange={this.handlePhasesDataChangeInput.bind(this, index, 'name')}
-                    />
-                  </td>
-                  {/* notrowcolor1 对应汉字红绿灯，转换 */}
-                  <td>
+              {
+                // (PhasesData || []).map((t, di) => ( 
+                new Array(32).fill(0).map((t, di) => (
+                  PhasesData[di] ?
+                    <tr key={di}>
+                      <td>{PhasesData[di].no}</td>
+                      <td>
+                        <Input
+                          size="small"
+                          value={PhasesData[di].name}
+                          onChange={this.handlePhasesDataChangeInput.bind(this, di, 'name')}
+                        />
+                      </td>
+                      {
+                        Object.keys(PhasesData[di]).map((key, index) => (
+                          key === "no" || key === "name" || key === "setred" || key === "setoff" || key === "cdtype" || key === "cdaddress" ||
+                          <td key={index}>
+                            <InputNumber
+                              size="small"
+                              min={0}
+                              max={32}
+                              value={PhasesData[di][key]}
+                              onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, key)}
+                            /></td>
+                        ))
+                      }
+                    </tr> :
+                    <tr key={di}>
+                      <td>{di}</td>
+                      <td>
+                        <Input
+                          size="small"
+                        // onChange={this.handlePhasesDataChangeInput.bind(this, di, 'name')}
+                        />
+                      </td>
+                      {
+                        new Array(28).fill(0).map((t, index) => (
+                          <td key={index}>
+                            <InputNumber
+                              size="small"
+                              min={0}
+                              max={32}
+                            // onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, key)}
+                            /></td>
+                        ))
+                      }
+
+                    </tr>
+                ))
+              }
+              {/*<td>
+                  // notrowcolor1 对应汉字红绿灯，转换 
                     <Input
                       size="small"
                       value={t.notrowcolor1}
@@ -298,10 +340,7 @@ class Phases extends React.Component {
                       max={512}
                       value={t.startnotrowtime3}
                       onChange={this.handlePhasesDataChangeInputNumber.bind(this, index, 'startnotrowtime3')}
-                    /></td>
-                </tr>
-              ))
-              }
+                    /></td> */}
             </tbody>
           </table>
         </div>
@@ -364,7 +403,7 @@ class Phases extends React.Component {
       "setoff": 0,
       "cdtype": 0,
       "cdaddress": 0
-    },{
+    }, {
       "no": 1,
       "name": "",
       "notrowcolor1": 33,
