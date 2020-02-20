@@ -10,7 +10,7 @@ import DelayStarts from "./signalCommonParameters/delayStarts"
 import Phases from "./signalCommonParameters/phases"
 import Intergreens from "./signalCommonParameters/intergreens"
 import DetectorPlans from "./signalCommonParameters/detector"
-
+import CommonPlans from "./signalCommonParameters/common"
 import { Select, Tabs,Row, Col,Table,InputNumber, message,Checkbox,Button } from 'antd';
 const { TabPane } = Tabs;
 const { Column } = Table
@@ -90,7 +90,7 @@ class Trafficlightflashfather extends React.Component {
               <DetectorPlans></DetectorPlans>
               </TabPane>
               <TabPane tab="通用" key="17">
-                13
+              <CommonPlans></CommonPlans>
               </TabPane>
               <TabPane tab="故障" key="18">
                 14
