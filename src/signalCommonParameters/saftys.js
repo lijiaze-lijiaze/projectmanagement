@@ -1,8 +1,7 @@
-// 绿间隔
+// 冲突
 import React from 'react'
 import {
   Icon,
-  InputNumber
 } from 'antd'
 import Lodash from 'lodash'
 
@@ -10,13 +9,13 @@ import '../yearPlan.less'
 // import Axios from '@common/Axios'
 // import Constant from '@common/Constant'
 
-class Intergreens extends React.Component {
+class Saftys extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      IntergreensData: []
+      SaftysData: []
     }
 
     this.junctionItem = {}
@@ -29,7 +28,7 @@ class Intergreens extends React.Component {
 
   render() {
     const {
-      IntergreensData
+      SaftysData
     } = this.state
 
     return (
@@ -62,30 +61,13 @@ class Intergreens extends React.Component {
                   <tr key={di}>
                     <td>{di + 1}向北</td>
                     {new Array(32).fill(0).map((t, index) => (
-                      IntergreensData[di] ?
-                        // <td key={index} onClick={() => this.toggleCheck(di, 'intergreen', index)}>
-                        //   {Boolean(IntergreensData[di].intergreen[index]) && <Icon type="check" />}
-                        // </td> :
-                        // <td key={index} onClick={() => this.toggleCheck(di, 'intergreen', index)}>
-                        //   {Boolean(false) && <Icon type="check" />}
-                        // </td>
-                         <td key={index}>
-                         <InputNumber
-                           size="small"
-                           min={0}
-                           max={512}
-                           value={IntergreensData[di].intergreen[index]}
-                           onChange={this.handleIntergreensDataChange.bind(this, di, index, 'intergreen')}
-                         /></td> :
-                       <td key={index}>
-                         <InputNumber
-                           size="small"
-                           min={0}
-                           max={512}
-                           // value={DelayStartsData[di].intergreen[index] || 0}
-                           value={0  }
-                           // onChange={this.handleDelayStartsDataChange.bind(this, di, index, 'intergreen')}
-                         /></td>
+                      SaftysData[di] ?
+                        <td key={index} onClick={() => this.toggleCheck(di, 'conflict', index)}>
+                          {Boolean(SaftysData[di].conflict[index]) && <Icon type="check" />}
+                        </td> :
+                        <td key={index} onClick={() => this.toggleCheck(di, 'conflict', index)}>
+                          {Boolean(false) && <Icon type="check" />}
+                        </td>
                     ))}
                   </tr>
                 ))
@@ -99,40 +81,36 @@ class Intergreens extends React.Component {
 
   setCurrentJunction = junctionItem => {
     this.junctionItem = junctionItem
-    this.setState({ IntergreensData: [] })
+    this.setState({ SaftysData: [] })
   }
 
   getCtlConfData = async () => {
     // const controller_id = this.junctionItem.controller_id
 
-    let IntergreensData = []
+    let SaftysData = []
     // try {
     //   const res = await Axios.get(
     //     Constant.api.getCtlConf
     //       .replace('$id', controller_id)
     //       .replace('$key', 'schedules')
     //   )
-    //   IntergreensData = res.data.plans
+    //   SaftysData = res.data.plans
     // } catch (err) {
-    //   IntergreensData = []
+    //   SaftysData = []
     //   message.error('获取数据失败, ' + err)
     // }
-    IntergreensData = [{
-      "no": 0,
-      "intergreen": [0, 6, 0, 0, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 0, 0, 0, 0, 6, 0, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6]
-    }, {
-      "no": 1,
-      "intergreen": [0, 6, 6, 0, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 0, 5, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0, 0, 0, 0, 0, 0, 6]
-    }, {
-      "no": 2,
-      "intergreen": [6, 0, 0, 0, 6, 6, 6, 6, 0, 6, 6, 6, 6, 6, 0, 6, 0, 0, 0, 0, 0, 6, 6, 0, 6, 0, 0, 0, 0, 0, 0, 6]
-    }]
+    SaftysData = [
+      {
+        "no": 0,
+        "conflict": [0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      }
+    ]
 
-    this.convertCheckedData(IntergreensData)
+    this.convertCheckedData(SaftysData)
   }
 
-  convertCheckedData = (IntergreensData) => {
-    // IntergreensData.forEach(stages => {
+  convertCheckedData = (SaftysData) => {
+    // SaftysData.forEach(stages => {
     //   const monthArr = Number(stages.month).toString(2).split('')
     //   while (monthArr.length < 12) {
     //     monthArr.unshift(0)
@@ -155,35 +133,35 @@ class Intergreens extends React.Component {
     //   stages.week = weekArr
     // })
 
-    this.setState({ IntergreensData })
+    this.setState({ SaftysData })
   }
 
-  handleIntergreensDataChange = (di,index, field, e) => {
-    const { IntergreensData } = this.state
-    IntergreensData[di][field][index] = e
-    this.setState({ IntergreensData })
-  }
+  // handleDelayStartsDataChange = (index, field, e) => {
+  //   const { SaftysData } = this.state
+  //   SaftysData[index][field] = e
+  //   this.setState({ SaftysData })
+  // }
 
   // toggleCheckAll = (index, field) => {
-  //   const { IntergreensData } = this.state
+  //   const { SaftysData } = this.state
 
-  //   if (IntergreensData[index][field].every(x => x === 1)) {
-  //     IntergreensData[index][field].fill(0)
+  //   if (SaftysData[index][field].every(x => x === 1)) {
+  //     SaftysData[index][field].fill(0)
   //   } else {
-  //     IntergreensData[index][field].fill(1)
+  //     SaftysData[index][field].fill(1)
   //   }
 
-  //   this.setState({ IntergreensData })
+  //   this.setState({ SaftysData })
   // }
 
-  // toggleCheck = (di, field, index) => {
-  //   const { IntergreensData } = this.state
+  toggleCheck = (di, field, index) => {
+    const { SaftysData } = this.state
 
-  //   if (!IntergreensData[di]) return
-  //   IntergreensData[di][field][index] = Number(!IntergreensData[di][field][index])
+    if (!SaftysData[di]) return
+    SaftysData[di][field][index] = Number(!SaftysData[di][field][index])
 
-  //   this.setState({ IntergreensData })
-  // }
+    this.setState({ SaftysData })
+  }
 
   submitData = async () => {
     const data = this.beforeSubmit()
@@ -212,18 +190,18 @@ class Intergreens extends React.Component {
   }
 
   beforeSubmit = () => {
-    let { IntergreensData } = this.state
+    let { SaftysData } = this.state
 
-    IntergreensData = Lodash.cloneDeep(IntergreensData)
+    SaftysData = Lodash.cloneDeep(SaftysData)
 
-    IntergreensData.forEach(plan => {
+    SaftysData.forEach(plan => {
       plan.month = parseInt(plan.month.join(''), 2)
       plan.day = parseInt(plan.day.join(''), 2)
       plan.week = parseInt(plan.week.join(''), 2)
     })
 
-    return IntergreensData
+    return SaftysData
   }
 }
 
-export default Intergreens
+export default Saftys

@@ -1,6 +1,8 @@
+// 早断
 import React from 'react'
 import {
   Icon,
+  InputNumber
 } from 'antd'
 import Lodash from 'lodash'
 
@@ -82,7 +84,7 @@ class EarlyOutTime extends React.Component {
                 new Array(32).fill(0).map((t, di) => (
                   <tr key={di}>
                     <td>{di + 1}</td>
-                    {new Array(32).fill(0).map((t, index) => (
+                    {/* {new Array(32).fill(0).map((t, index) => (
                       EarlyOutTimeData[di] ?
                         <td key={index} onClick={() => this.toggleCheck(di, 'earlycuttime', index)}>
                           {Boolean(EarlyOutTimeData[di].earlycuttime[index]) && <Icon type="check" />}
@@ -90,6 +92,27 @@ class EarlyOutTime extends React.Component {
                         <td key={index} onClick={() => this.toggleCheck(index, 'earlycuttime', di)}>
                           {Boolean(false) && <Icon type="check" />}
                         </td>
+                    ))} */}
+                     {new Array(32).fill(0).map((t, index) => (
+                      EarlyOutTimeData[di] ?
+                        <td key={index}>
+                          <InputNumber
+                            size="small"
+                            min={0}
+                            max={32}
+                            value={EarlyOutTimeData[di].earlycuttime[index]}
+                            onChange={this.handleEarlyOutTimeDataChange.bind(this, di, index, 'earlycuttime')}
+                          /></td> 
+                          :
+                        <td key={index}>
+                          <InputNumber
+                            size="small"
+                            min={0}
+                            max={32}
+                            // value={EarlyOutTimeData[di].earlycuttime[index] || 0}
+                            value={0  }
+                            // onChange={this.handleEarlyOutTimeDataChange.bind(this, di, index, 'earlycuttime')}
+                          /></td>
                     ))}
                   </tr>
                 ))
@@ -157,11 +180,11 @@ class EarlyOutTime extends React.Component {
     this.setState({ EarlyOutTimeData })
   }
 
-  // handleEarlyOutTimeDataChange = (index, field, e) => {
-  //   const { EarlyOutTimeData } = this.state
-  //   EarlyOutTimeData[index][field] = e
-  //   this.setState({ EarlyOutTimeData })
-  // }
+  handleEarlyOutTimeDataChange = (di,index, field, e) => {
+    const { EarlyOutTimeData } = this.state
+    EarlyOutTimeData[di][field][index] = e
+    this.setState({ EarlyOutTimeData })
+  }
 
   // toggleCheckAll = (index, field) => {
   //   const { EarlyOutTimeData } = this.state
@@ -175,15 +198,15 @@ class EarlyOutTime extends React.Component {
   //   this.setState({ EarlyOutTimeData })
   // }
 
-  toggleCheck = (di, field, index) => {
-    const { EarlyOutTimeData } = this.state
+  // toggleCheck = (di, field, index) => {
+  //   const { EarlyOutTimeData } = this.state
 
-    if(!EarlyOutTimeData[di]) return
+  //   if(!EarlyOutTimeData[di]) return
       
-    EarlyOutTimeData[di][field][index] = Number(!EarlyOutTimeData[di][field][index])
+  //   EarlyOutTimeData[di][field][index] = Number(!EarlyOutTimeData[di][field][index])
 
-    this.setState({ EarlyOutTimeData })
-  }
+  //   this.setState({ EarlyOutTimeData })
+  // }
 
   submitData = async () => {
     const data = this.beforeSubmit()

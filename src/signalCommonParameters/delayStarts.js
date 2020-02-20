@@ -1,6 +1,7 @@
+// 晚放
 import React from 'react'
 import {
-  Icon,
+  InputNumber
 } from 'antd'
 import Lodash from 'lodash'
 
@@ -84,12 +85,23 @@ class DelayStarts extends React.Component {
                     <td>{di + 1}</td>
                     {new Array(32).fill(0).map((t, index) => (
                       DelayStartsData[di] ?
-                        <td key={index} onClick={() => this.toggleCheck(di, 'delaystarttime', index)}>
-                          {Boolean(DelayStartsData[di].delaystarttime[index]) && <Icon type="check" />}
-                        </td> :
-                        <td key={index} onClick={() => this.toggleCheck(di, 'delaystarttime', index)}>
-                          {Boolean(false) && <Icon type="check" />}
-                        </td>
+                        <td key={index}>
+                          <InputNumber
+                            size="small"
+                            min={0}
+                            max={32}
+                            value={DelayStartsData[di].delaystarttime[index]}
+                            onChange={this.handleDelayStartsDataChange.bind(this, di, index, 'delaystarttime')}
+                          /></td> :
+                        <td key={index}>
+                          <InputNumber
+                            size="small"
+                            min={0}
+                            max={32}
+                            // value={DelayStartsData[di].delaystarttime[index] || 0}
+                            value={0  }
+                            // onChange={this.handleDelayStartsDataChange.bind(this, di, index, 'delaystarttime')}
+                          /></td>
                     ))}
                   </tr>
                 ))
@@ -125,10 +137,10 @@ class DelayStarts extends React.Component {
       {
         "no": 1,
         "delaystarttime": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0]
-      },{
+      }, {
         "no": 2,
         "delaystarttime": [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0]
-      },{
+      }, {
         "no": 3,
         "delaystarttime": [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0]
       }
@@ -163,11 +175,11 @@ class DelayStarts extends React.Component {
     this.setState({ DelayStartsData })
   }
 
-  // handleDelayStartsDataChange = (index, field, e) => {
-  //   const { DelayStartsData } = this.state
-  //   DelayStartsData[index][field] = e
-  //   this.setState({ DelayStartsData })
-  // }
+  handleDelayStartsDataChange = (di, index, field, e) => {
+    const { DelayStartsData } = this.state
+    DelayStartsData[di][field][index] = e
+    this.setState({ DelayStartsData })
+  }
 
   // toggleCheckAll = (index, field) => {
   //   const { DelayStartsData } = this.state
@@ -181,14 +193,14 @@ class DelayStarts extends React.Component {
   //   this.setState({ DelayStartsData })
   // }
 
-  toggleCheck = (di, field, index) => {
-    const { DelayStartsData } = this.state
+  // toggleCheck = (di, field, index) => {
+  //   const { DelayStartsData } = this.state
 
-    if(!DelayStartsData[di]) return
-    DelayStartsData[di][field][index] = Number(!DelayStartsData[di][field][index])
+  //   if(!DelayStartsData[di]) return
+  //   DelayStartsData[di][field][index] = Number(!DelayStartsData[di][field][index])
 
-    this.setState({ DelayStartsData })
-  }
+  //   this.setState({ DelayStartsData })
+  // }
 
   submitData = async () => {
     const data = this.beforeSubmit()
